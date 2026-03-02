@@ -15,8 +15,6 @@ int main() {
         printf("Enter Burst Time for P%d: ", i + 1);
         scanf("%d", &bt[i]);
     }
-
-    // Sort processes by Arrival Time (FCFS rule)
     for(i = 0; i < n - 1; i++) {
         for(j = i + 1; j < n; j++) {
             if(at[i] > at[j]) {
@@ -30,30 +28,25 @@ int main() {
         }
     }
 
-    // Calculate Completion, Waiting, and Turnaround Times
     ct[0] = at[0] + bt[0];
     tat[0] = ct[0] - at[0];
     wt[0] = tat[0] - bt[0];
 
     for(i = 1; i < n; i++) {
         if(ct[i - 1] < at[i]) {
-            ct[i] = at[i] + bt[i];  // CPU idle until process arrives
+            ct[i] = at[i] + bt[i]; 
         } else {
             ct[i] = ct[i - 1] + bt[i];
         }
         tat[i] = ct[i] - at[i];
         wt[i] = tat[i] - bt[i];
     }
-
-    // Calculate averages
     for(i = 0; i < n; i++) {
         twt += wt[i];
         ttat += tat[i];
     }
     awt = twt / n;
     att = ttat / n;
-
-    // Print results
     printf("\nP\tAT\tBT\tCT\tWT\tTAT");
     for(i = 0; i < n; i++) {
         printf("\nP%d\t%d\t%d\t%d\t%d\t%d",
@@ -64,3 +57,4 @@ int main() {
 
     return 0;
 }
+
